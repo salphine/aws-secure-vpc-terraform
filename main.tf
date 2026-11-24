@@ -17,7 +17,7 @@ resource "aws_vpc" "secure_vpc" {
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.secure_vpc.id
   cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
   availability_zone       = "${var.aws_region}a"
 
   tags = {
@@ -40,6 +40,7 @@ resource "aws_subnet" "private_subnet" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.secure_vpc.id
 }
+
 # 5. Public Route Table (Routes traffic to the Internet)
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.secure_vpc.id
@@ -71,10 +72,11 @@ resource "aws_security_group" "public_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Wait! This is bad practice. We will fix this.
+    cidr_blocks = ["197.248.31.197/32"] # Your actual IP
   }
 
   egress {
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -93,13 +95,22 @@ resource "aws_security_group" "private_sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.public_sg.id] # Only allows traffic from the public SG
+    security_groups = [aws_security_group.public_sg.id]
   }
 
   egress {
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# 9. Lock down the Default Security Group (Bonus Security Fix)
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.secure_vpc.id
+  tags = {
+    Name = "Default-SG-Locked"
   }
 }
