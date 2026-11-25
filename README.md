@@ -1,9 +1,9 @@
-# **AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)**
+# AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)**
 
-## **📌 Project Overview**
-This project demonstrates a **"shift-left" security** approach to cloud architecture. Instead of manually configuring resources in the AWS Console, a secure multi-tier VPC is defined using **Terraform**. A **GitHub Actions CI/CD pipeline** runs **Checkov** (a static analysis tool) on every commit to detect and block misconfigurations before they reach production.
+##  Project Overview
+This project demonstrates a "shift-left" security approach to cloud architecture. Instead of manually configuring resources in the AWS Console, a secure multi-tier VPC is defined using **Terraform**. A **GitHub Actions CI/CD pipeline** runs **Checkov** (a static analysis tool) on every commit to detect and block misconfigurations before they reach production.
 
-## **🏗️ Architecture & Security Controls**
+##  Architecture & Security Controls**
 The Terraform code (`main.tf`) deploys:
 1. **VPC & Subnets:** A custom VPC (`10.0.0.0/16`) with a Public Subnet (Bastion) and a Private Subnet (Internal).
 2. **Internet Gateway & Route Tables:** Correctly routes public traffic to the internet while keeping the private subnet isolated.
@@ -12,7 +12,7 @@ The Terraform code (`main.tf`) deploys:
    - **Private SG:** Allows SSH **only** from the Public Bastion Security Group.
 4. **VPC Flow Logs:** Captures all network traffic to CloudWatch for auditing and incident response.
 
-## **🚨 The CI/CD Security Pipeline (Checkov)**
+## ** The CI/CD Security Pipeline (Checkov)**
 The `.github/workflows/security-scan.yml` file contains a GitHub Actions workflow that runs Checkov on every push.
 
 ### **The Vulnerability Caught**
@@ -24,7 +24,7 @@ During testing, I intentionally introduced a critical misconfiguration:
 2. I configured the pipeline with **`soft_fail: false`** to test if it would block bad code. When I pushed the vulnerable code, **the pipeline failed (Red X) and blocked the merge**.
 3. I fixed the code and set **`soft_fail: true`** for the final build so it warns on non-critical issues but passes.
 
-## **📸 Evidence**
+## ** Evidence**
 
 **1. Terraform Validation:**
 *The code was validated locally before being pushed to GitHub.*
