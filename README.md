@@ -1,9 +1,9 @@
 # AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)
 
-## 📌 Project Overview
+##  Project Overview
 This project demonstrates a **"shift-left" security** approach to cloud architecture. Instead of manually configuring resources in the AWS Console, a secure multi-tier VPC is defined using **Terraform**. Multiple automated security tools are integrated into a **GitHub Actions CI/CD pipeline** to detect and block misconfigurations, secrets, and vulnerabilities before they reach production.
 
-## 🏗️ Architecture & Security Controls
+##  Architecture & Security Controls
 The Terraform code (`main.tf`) deploys:
 1. **VPC & Subnets:** A custom VPC (`10.0.0.0/16`) with a Public Subnet (Bastion) and a Private Subnet (Internal).
 2. **Internet Gateway & Route Tables:** Correctly routes public traffic to the internet while keeping the private subnet isolated.
@@ -12,7 +12,7 @@ The Terraform code (`main.tf`) deploys:
    - **Private SG:** Allows SSH **only** from the Public Bastion Security Group.
 4. **VPC Flow Logs:** Captures all network traffic to CloudWatch for auditing and incident response.
 
-## 🚨 The CI/CD Security Pipeline
+##  The CI/CD Security Pipeline
 The pipeline consists of multiple automated security gates:
 
 1. **Local Pre-Commit (Gitleaks):** Scans the code for hardcoded secrets *before* it is committed.
@@ -30,7 +30,7 @@ During testing, I intentionally introduced a critical misconfiguration:
 2. I configured the pipeline with **`soft_fail: false`** to test if it would block bad code. When I pushed the vulnerable code, **the pipeline failed (Red X) and blocked the merge**.
 3. I fixed the code and set **`soft_fail: true`** for the final build so it warns on non-critical issues but passes.
 
-## 📸 Evidence
+##  Evidence
 
 **1. Local Pre-commit Secret Scanning:**
 *Gitleaks successfully scanned the code locally and passed, preventing secrets from entering version control.*
@@ -44,7 +44,7 @@ During testing, I intentionally introduced a critical misconfiguration:
 *The pipeline passed after the vulnerability was remediated.*
 <img width="1357" height="611" alt="Pipeline Success" src="https://github.com/user-attachments/assets/a047ff01-6a7b-436b-a7a1-2f7815a3287a" />
 
-## 🚀 How to Deploy
+##  How to Deploy
 1. Install Terraform.
 2. Run `terraform init`.
 3. Run `terraform plan` to review the architecture.
