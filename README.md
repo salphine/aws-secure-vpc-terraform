@@ -1,7 +1,7 @@
 # AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)
 
 ## 📌 Project Overview
-This project demonstrates a "shift-left" security approach to cloud architecture. Instead of manually configuring resources in the AWS Console, a secure multi-tier VPC is defined using **Terraform**. Multiple automated security tools are integrated into a **GitHub Actions CI/CD pipeline** to detect and block misconfigurations, secrets, and vulnerabilities before they reach production.
+This project demonstrates a **"shift-left" security** approach to cloud architecture. Instead of manually configuring resources in the AWS Console, a secure multi-tier VPC is defined using **Terraform**. Multiple automated security tools are integrated into a **GitHub Actions CI/CD pipeline** to detect and block misconfigurations, secrets, and vulnerabilities before they reach production.
 
 ## 🏗️ Architecture & Security Controls
 The Terraform code (`main.tf`) deploys:
@@ -17,7 +17,7 @@ The pipeline consists of multiple automated security gates:
 
 1. **Local Pre-Commit (Gitleaks):** Scans the code for hardcoded secrets *before* it is committed.
 2. **IaC Scanning (Checkov):** Scans Terraform code for infrastructure misconfigurations.
-3. **Secret Scanning (Gitleaks):** Runs in GitHub Actions to catch secrets in the repo.
+3. **Secret Scanning (Gitleaks):** Runs in GitHub Actions to catch secrets in the repository.
 4. **SAST (Semgrep):** Scans code for static application security vulnerabilities.
 5. **Dependency Scanning (Dependabot):** Automatically alerts on outdated or vulnerable dependencies.
 
@@ -33,15 +33,15 @@ During testing, I intentionally introduced a critical misconfiguration:
 ## 📸 Evidence
 
 **1. Local Pre-commit Secret Scanning:**
-*(Screenshot of the terminal showing "Passed" for Gitleaks)*
-<img width="1363" height="720" alt="Pre-Commit Scan" src="https://github.com/user-attachments/assets/3d3b5a27-ee8c-4308-b05f-d76e37a40be6" />
+*Gitleaks successfully scanned the code locally and passed, preventing secrets from entering version control.*
+<img width="1363" height="720" alt="Pre-Commit Scan" src="[PASTE_YOUR_SCREENSHOT_LINK_HERE]" />
 
 **2. Pipeline Blocking Vulnerable Code (Red X):**
-*(Screenshot of the GitHub Actions page showing the failed run for the 0.0.0.0/0 commit)*
+*The GitHub Actions pipeline failed when the open SSH port was introduced.*
 <img width="1360" height="609" alt="Pipeline Failure" src="https://github.com/user-attachments/assets/052e08bd-204f-4c93-9ace-46b2640c4f13" />
 
 **3. Pipeline Passing Secure Code (Green Check):**
-*(Screenshot of the GitHub Actions page showing the successful run)*
+*The pipeline passed after the vulnerability was remediated.*
 <img width="1357" height="611" alt="Pipeline Success" src="https://github.com/user-attachments/assets/a047ff01-6a7b-436b-a7a1-2f7815a3287a" />
 
 ## 🚀 How to Deploy
