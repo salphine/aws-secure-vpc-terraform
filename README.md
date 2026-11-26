@@ -1,3 +1,4 @@
+<img width="1366" height="714" alt="Screenshot 2026-11-26 110920" src="https://github.com/user-attachments/assets/c5bba12e-41a2-4df0-bcbf-9fabe6348517" />
 # AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)
 
 ##  Project Overview
