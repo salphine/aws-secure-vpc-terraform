@@ -1,4 +1,3 @@
-<img width="1366" height="714" alt="Screenshot 2026-11-26 110920" src="https://github.com/user-attachments/assets/c5bba12e-41a2-4df0-bcbf-9fabe6348517" />
 # AWS Secure VPC & CI/CD Security Pipeline (DevSecOps)
 
 ##  Project Overview
@@ -15,7 +14,6 @@ The Terraform code (`main.tf`) deploys:
 
 ##  The CI/CD Security Pipeline
 The pipeline consists of multiple automated security gates:
-
 1. **Local Pre-Commit (Gitleaks):** Scans the code for hardcoded secrets *before* it is committed.
 2. **IaC Scanning (Checkov):** Scans Terraform code for infrastructure misconfigurations.
 3. **Secret Scanning (Gitleaks):** Runs in GitHub Actions to catch secrets in the repository.
@@ -35,7 +33,7 @@ During testing, I intentionally introduced a critical misconfiguration:
 
 **1. Local Pre-commit Secret Scanning:**
 *Gitleaks successfully scanned the code locally and passed, preventing secrets from entering version control.*
-<img width="1363" height="720" alt="Pre-Commit Scan" src="[PASTE_YOUR_SCREENSHOT_LINK_HERE]" />
+<img width="1363" height="720" alt="Pre-Commit Scan" src="https://github.com/user-attachments/assets/c5bba12e-41a2-4df0-bcbf-9fabe6348517" />
 
 **2. Pipeline Blocking Vulnerable Code (Red X):**
 *The GitHub Actions pipeline failed when the open SSH port was introduced.*
